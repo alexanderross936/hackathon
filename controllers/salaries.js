@@ -3,7 +3,7 @@ const pool = require('../sql/connection')
 const { handleSQLError } = require('../sql/error')
 
 function get_salaries(req, res){
-  pool.query('SELECT id, salary FROM users',
+  pool.query('SELECT id, salary FROM employees',
   function(err, rows){
       if(err){
           return res.json({
@@ -17,9 +17,8 @@ function get_salaries(req, res){
 }
 
 function get_first_names(req, res){
-    let UserId = req.params.id
-  let sql = 'SELECT ??, ??, ?? FROM ?? WHERE ?? < ??'
-  const replacements = ['id', 'first_name', 'salary', 'employees', 'id', UserId]
+  let sql = 'SELECT ??, ?? FROM ?? WHERE ?? < ??'
+  const replacements = ['id', 'first_name', 'employees', 'id', 10]
   sql = mysql.format(sql, replacements)
   pool.query(sql, function(err, rows){
       if(err){
@@ -33,10 +32,10 @@ function get_first_names(req, res){
   })
 }
 
-function getSalaryByID(req, res){
+function getEmployeeByID(req, res){
   let userId = req.params.id
-  let sql = 'SELECT ??, ??, ?? FROM ?? WHERE ?? = ?'
-  const replacements = ['id', 'first_name', 'salary', 'employees', 'id', userId]
+  let sql = 'SELECT ??, ?? FROM ?? WHERE ?? = ?'
+  const replacements = ['id', 'first_name', 'employees', 'id', userId]
   sql = mysql.format(sql, replacements)
   pool.query(sql, function(err, rows){
       if(err){
@@ -51,7 +50,7 @@ function getSalaryByID(req, res){
 }
 
 module.exports = {
-    get_salaries,
-    get_first_names,
-    getSalaryByID
+    getAllEmployees,
+    getEmployeeById,
+    get_first_names
   }
